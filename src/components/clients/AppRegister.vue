@@ -62,7 +62,7 @@
             variant="outlined"
             clearable
             rounded
-        ></v-text-field>
+        />
 
         <v-text-field
             v-model="email.value.value"
@@ -72,7 +72,7 @@
             variant="outlined"
             clearable
             rounded
-        ></v-text-field>
+        />
         <v-btn
             color="primary"
             @click="insertRecord"

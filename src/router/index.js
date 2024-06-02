@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import List from '../components/clients/AppList.vue'
 import Register from '../components/clients/AppRegister.vue'
+import Address from '../components/addresses/AppAddress.vue'
 
 const routes = [
     {
@@ -12,6 +13,11 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: Register
+    },
+    {
+        path: '/address',
+        name: 'Address',
+        component: Address
     }
 ]
 

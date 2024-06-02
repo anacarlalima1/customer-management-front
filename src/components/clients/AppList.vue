@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -62,6 +64,36 @@ export default {
       ],
       currentPage: 1,
     };
+  },
+  methods: {
+    async fetchClients() {
+      this.loading = true;
+      try {
+        const response = await axios.get('/api/clients', {
+          params: { page: this.currentPage }
+        });
+        this.clients = response.data.data;
+        this.totalClients = response.data.total;
+      } catch (error) {
+        console.error('Error fetching clients:', error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    editClient(client) {
+      console.log('Edit client', client);
+    },
+    deleteClient(client) {
+      // Chamar API para deletar cliente
+      axios.delete(`/api/clients/${client.id}`)
+          .then(response => {
+            console.log('Client deleted', response);
+            this.fetchClients(); // Recarregar lista após deletar
+          })
+          .catch(error => {
+            console.error('Error deleting client:', error);
+          });
+    }
   },
   // methods: {
   //   fetchClients() {
@@ -86,8 +118,8 @@ export default {
   //     // Implemente a lógica de remoção
   //   }
   // },
-  // mounted() {
-  //   this.fetchClients();
-  // }
+  created() {
+    this.fetchClients();
+  }
 }
 </script>
