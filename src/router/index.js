@@ -6,13 +6,19 @@ import Address from '../components/addresses/AppAddress.vue'
 const routes = [
     {
         path: '/',
-        name: 'Home',
+        name: 'ClientsList',
         component: List
     },
     {
         path: '/register',
         name: 'Register',
         component: Register
+    },
+    {
+        path: '/edit/:id',
+        name: 'EditClient',
+        component: Register,
+        props: true
     },
     {
         path: '/address',

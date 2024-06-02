@@ -5,7 +5,7 @@
   >
     <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-    <v-toolbar-title>My files</v-toolbar-title>
+    <v-toolbar-title>Customer Management System</v-toolbar-title>
 
     <v-spacer></v-spacer>
 
@@ -43,14 +43,6 @@ export default {
       {
         title: 'Cadastro de Clientes',
         value: '/register',
-      },
-      {
-        title: 'Fizz',
-        value: 'fizz',
-      },
-      {
-        title: 'Buzz',
-        value: 'buzz',
       },
     ],
   }),

@@ -6,7 +6,7 @@
             v-model="search"
             prepend-inner-icon="mdi-magnify"
             label="Pesquisar clientes"
-            class="ml-15 mt-15"
+            class="mt-15"
             variant="outlined"
             clearable
             rounded
@@ -19,7 +19,7 @@
             rounded
             prepend-icon="mdi-plus"
             size="large"
-            class="ml-5 mt-10"
+            class="mt-10"
         >
           Inserir
         </v-btn>
@@ -32,35 +32,51 @@
         :server-items-length="totalClients"
         :loading="loading"
         class="elevation-1"
+        item-key="id"
     >
-      <!--      <template #item.actions="{ item }">-->
-      <!--        <v-btn icon @click="editClient(item)">-->
-      <!--          <v-icon>mdi-pencil</v-icon>-->
-      <!--        </v-btn>-->
-      <!--        <v-btn icon @click="deleteClient(item)">-->
-      <!--          <v-icon>mdi-delete</v-icon>-->
-      <!--        </v-btn>-->
-      <!--      </template>-->
+    <template v-slot:item="{ item }">
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.social_name }}</td>
+        <td>{{ item.cpf }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.phone }}</td>
+        <td>{{ item.father_name }}</td>
+        <td>{{ item.mother_name }}</td>
+        <td>
+          <v-btn icon @click="editClient(item)">
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
+          <v-btn icon @click="deleteClient(item)">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
+        </td>
+      </tr>
+    </template>
     </v-data-table>
   </v-container>
 </template>
 
 <script>
-import axios from "axios";
+import axios from "@/api";
 
 export default {
   data() {
     return {
-      search: '',
       clients: [],
       totalClients: 0,
       loading: false,
       headers: [
-        {text: 'ID', value: 'id'},
-        {text: 'Nome', value: 'name'},
-        {text: 'E-mail', value: 'email'},
-        {text: 'Telefone', value: 'phone'},
-        {text: 'Ações', value: 'actions', sortable: false},
+        {title: 'ID', value: 'id'},
+        {title: 'Nome', value: 'name'},
+        {title: 'Nome Social', value: 'social_name'},
+        {title: 'CPF', value: 'cpf'},
+        {title: 'E-mail', value: 'email'},
+        {title: 'Telefone', value: 'phone'},
+        {title: 'Nome do Pai', value: 'father_name'},
+        {title: 'Nome da Mãe', value: 'mother_name'},
+        {title: 'Ações', value: 'actions', sortable: false},
       ],
       currentPage: 1,
     };
@@ -69,10 +85,10 @@ export default {
     async fetchClients() {
       this.loading = true;
       try {
-        const response = await axios.get('/api/clients', {
+        const response = await axios.get('/clients', {
           params: { page: this.currentPage }
         });
-        this.clients = response.data.data;
+        this.clients = response.data.clients.data;
         this.totalClients = response.data.total;
       } catch (error) {
         console.error('Error fetching clients:', error);
@@ -80,12 +96,12 @@ export default {
         this.loading = false;
       }
     },
-    editClient(client) {
-      console.log('Edit client', client);
+    editClient(item) {
+      this.$router.push({ name: 'EditClient', params: { id: item.id } });
     },
     deleteClient(client) {
       // Chamar API para deletar cliente
-      axios.delete(`/api/clients/${client.id}`)
+      axios.delete(`/clients/${client.id}`)
           .then(response => {
             console.log('Client deleted', response);
             this.fetchClients(); // Recarregar lista após deletar
