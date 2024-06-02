@@ -13,7 +13,7 @@
             rounded
         />
         <v-text-field
-            v-model="name.value.value"
+            v-model="social_name.value.value"
             append-inner-icon="mdi mdi-pencil-outline"
             :counter="10"
             :error-messages="name.errorMessage.value"
@@ -23,17 +23,17 @@
             rounded
         />
         <v-text-field
-            v-model="name.value.value"
+            v-model="cpf.value.value"
             append-inner-icon="mdi mdi-form-textbox"
             :counter="10"
-            :error-messages="name.errorMessage.value"
+            :error-messages="cpf.errorMessage.value"
             label="CPF"
             variant="outlined"
             clearable
             rounded
         />
         <v-text-field
-            v-model="name.value.value"
+            v-model="father_name.value.value"
             append-inner-icon="mdi mdi-pencil-outline"
             :counter="10"
             :error-messages="name.errorMessage.value"
@@ -43,7 +43,7 @@
             rounded
         />
         <v-text-field
-            v-model="name.value.value"
+            v-model="mother_name.value.value"
             append-inner-icon="mdi mdi-pencil-outline"
             :counter="10"
             :error-messages="name.errorMessage.value"
@@ -98,10 +98,10 @@
   </v-container>
 </template>
 <script setup>
-import {ref} from 'vue'
+// import {ref} from 'vue'
 import {useField, useForm} from 'vee-validate'
 
-const {handleSubmit, handleReset} = useForm({
+const {handleSubmit} = useForm({
   validationSchema: {
     name(value) {
       if (value?.length >= 2) return true
@@ -118,30 +118,22 @@ const {handleSubmit, handleReset} = useForm({
 
       return 'Must be a valid e-mail.'
     },
-    select(value) {
-      if (value) return true
-
-      return 'Select an item.'
-    },
-    checkbox(value) {
-      if (value === '1') return true
-
-      return 'Must be checked.'
-    },
   },
 })
 const name = useField('name')
+const social_name = useField('social_name')
+const cpf = useField('cpf')
+const father_name = useField('father_name')
+const mother_name = useField('mother_name')
 const phone = useField('phone')
 const email = useField('email')
-const select = useField('select')
-const checkbox = useField('checkbox')
 
-const items = ref([
-  'Item 1',
-  'Item 2',
-  'Item 3',
-  'Item 4',
-])
+// const items = ref([
+//   'Item 1',
+//   'Item 2',
+//   'Item 3',
+//   'Item 4',
+// ])
 
 const submit = handleSubmit(values => {
   alert(JSON.stringify(values, null, 2))
